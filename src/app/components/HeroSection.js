@@ -31,7 +31,7 @@ export default function HeroSection() {
                         variant="h4" 
                         fontWeight={300} 
                         gutterBottom 
-                        sx={{ fontSize: { xs: '1.8rem', sm: '2rem', md: '3.5rem' } }}
+                        sx={{ fontSize: { xs: '1.8rem', sm: '2rem', md: '3rem' } }}
                     >
                         Pay Only for <span style={{ fontWeight: "bold" }}>Results.</span>
                     </Typography>
@@ -39,7 +39,7 @@ export default function HeroSection() {
                         variant="h4" 
                         fontWeight={300} 
                         gutterBottom 
-                        sx={{ fontSize: { xs: '1.8rem', sm: '2rem', md: '3.5rem' } }}
+                        sx={{ fontSize: { xs: '1.8rem', sm: '2rem', md: '3rem' } }}
                     >
                         Reach <span style={{ fontWeight: "bold" }}>New Customers.</span>
                     </Typography>
@@ -47,7 +47,7 @@ export default function HeroSection() {
                         variant="h4" 
                         fontWeight={300} 
                         gutterBottom 
-                        sx={{ fontSize: { xs: '1.8rem', sm: '2rem', md: '3.5rem' } }}
+                        sx={{ fontSize: { xs: '1.8rem', sm: '2rem', md: '3rem' } }}
                     >
                         Increase <span style={{ fontWeight: "bold" }}>Sales.</span>
                     </Typography>
@@ -55,7 +55,7 @@ export default function HeroSection() {
                         variant="subtitle1" 
                         mt={2} 
                         mb={4} 
-                        sx={{ color: 'gray.300', fontSize: { xs: '1.8rem', sm: '2rem', md: '1.2rem' }}}
+                        sx={{ color: 'gray.300', fontSize: { xs: '1.8rem', sm: '2rem', md: '1rem' }}}
                     >
                         The Performance Marketing Platform You Can Trust
                     </Typography>
