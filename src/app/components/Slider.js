@@ -1,67 +1,41 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
-import { Box, Button, Typography } from '@mui/material';
+import React, { useState } from 'react';
+import { Box, Button, Typography, useMediaQuery } from '@mui/material';
 import Image from 'next/image';
 import { ArrowBack, ArrowForward } from '@mui/icons-material';
 
 const cardsData = [
+    { alt: 'Group of people', src: '/strength/str1.png', title: '3100+', subtitle: 'Publishers' },
+    { alt: 'Woman with megaphone', src: '/strength/str1.png', title: '250+', subtitle: 'Advertisers' },
     {
-        alt: 'Group of people showing thumbs up in modern office',
-        src: '/strength/str1.png',
-        title: '3100+',
-        subtitle: 'Publishers',
-    },
-    {
-        alt: 'Woman in red sweater with megaphone and icons',
-        src: '/strength/str1.png',
-        title: '250+',
-        subtitle: 'Advertisers',
-    },
-    {
-        alt: 'Three women smiling in white room',
+        alt: 'Three women',
         src: '/strength/str1.png',
         title: '5000+ Offers',
-        text: 'Our Company offers flexible payment terms for publishers bi-weekly, monthly, and net with varying due dates (7,15, 30, 45 days), allowing them to choose the best option.',
+        text: 'Our Company offers flexible payment terms for publishers...',
     },
-    {
-        alt: 'B2B business chart',
-        src: '/strength/str1.png',
-        title: 'Flexible',
-        subtitle: 'Payment Terms',
-    },
-    {
-        alt: 'Smiling man in office',
-        src: '/strength/str1.png',
-        title: 'Dedicated',
-        subtitle: 'Account Manager',
-    },
-    {
-        alt: 'Smiling man in office',
-        src: '/strength/str1.png',
-        title: 'Dedicated',
-        subtitle: 'Account Manager',
-    },
-    {
-        alt: 'Smiling man in office',
-        src: '/strength/str1.png',
-        title: 'Dedicated',
-        subtitle: 'Account Manager',
-    },
+    { alt: 'B2B chart', src: '/strength/str1.png', title: 'Flexible', subtitle: 'Payment Terms' },
+    { alt: 'Smiling man', src: '/strength/str1.png', title: 'Dedicated', subtitle: 'Account Manager' },
 ];
 
 const SliderMode = () => {
     const [currentIndex, setCurrentIndex] = useState(2);
+    const isMobile = useMediaQuery('(max-width:600px)');
 
-    const handleNext = () =>
-        setCurrentIndex((prev) => (prev + 1) % cardsData.length);
-
-    const handlePrev = () =>
-        setCurrentIndex((prev) => (prev - 1 + cardsData.length) % cardsData.length);
+    const handleNext = () => setCurrentIndex((prev) => (prev + 1) % cardsData.length);
+    const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + cardsData.length) % cardsData.length);
 
     const getTransformStyle = (i) => {
         const total = cardsData.length;
         const pos = (i - currentIndex + total) % total;
+
+        if (isMobile) {
+            return {
+                transform: `translateX(${(i - currentIndex) * 240}px)`,
+                zIndex: i === currentIndex ? 10 : 5,
+                opacity: Math.abs(i - currentIndex) > 1 ? 0 : 1,
+            };
+        }
 
         switch (pos) {
             case 0:
@@ -102,44 +76,48 @@ const SliderMode = () => {
     };
 
     return (
-        <Box sx={{ backgroundColor: 'linear-gradient(to right, #1b1631, #2b197a)', overflow: 'hidden', py: 2, px: 2 }}>
+        <Box
+            sx={{
+                background: 'linear-gradient(to right, #1b1631, #2b197a)',
+                overflow: 'hidden',
+                py: 4,
+                px: { xs: 2, sm: 4 },
+            }}
+        >
             <Typography
                 variant="h3"
-                align="center"
-                color="#fff"
-                fontWeight={800}
-                sx={{ mb: 6 }}
+                fontWeight={700}
+                gutterBottom
+                sx={{
+                    textTransform: 'lowercase',
+                    fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem', textAlign:"center" },
+                }}
             >
                 Our Strength
             </Typography>
 
             <Box
-                id="carousel"
                 sx={{
                     position: 'relative',
-                            width: '100%',
-
-                    height: { xs: 400, md: 460 },
+                    width: '100%',
+                    height: { xs: 360, sm: 420, md: 480 },
                     perspective: 1200,
-                    perspectiveOrigin: 'center center',
-                            mx: 'auto',
-
+                    mx: 'auto',
                 }}
             >
                 {cardsData.map((card, i) => (
                     <Box
                         key={i}
-                        className="card"
                         sx={{
                             position: 'absolute',
                             top: '50%',
-                            left: '50%',
-                            width: { xs: 220, md: 320 },
-                            height: { xs: 320, md: 450 },
+                            left: isMobile ? '50%' : '50%',
+                            width: { xs: 220, sm: 260, md: 320 },
+                            height: { xs: 300, sm: 360, md: 450 },
                             borderRadius: 2,
                             overflow: 'hidden',
                             transformStyle: 'preserve-3d',
-                            transition: 'transform 0.6s ease, box-shadow 0.6s ease',
+                            transition: 'transform 0.6s ease, box-shadow 0.6s ease, opacity 0.4s',
                             cursor: 'pointer',
                             backgroundColor: '#000',
                             ...getTransformStyle(i),
@@ -149,10 +127,7 @@ const SliderMode = () => {
                             src={card.src}
                             alt={card.alt}
                             fill
-                            style={{
-                                objectFit: 'cover',
-                                borderRadius: '8px',
-                            }}
+                            style={{ objectFit: 'cover', borderRadius: '8px' }}
                         />
                         <Box
                             sx={{
@@ -163,8 +138,6 @@ const SliderMode = () => {
                                 p: 2,
                                 color: '#fff',
                                 background: 'linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.9) 100%)',
-                                borderBottomLeftRadius: 8,
-                                borderBottomRightRadius: 8,
                                 zIndex: 2,
                             }}
                         >
@@ -174,7 +147,15 @@ const SliderMode = () => {
                                 {card.subtitle}
                             </Typography>
                             {card.text && (
-                                <Typography variant="body2" sx={{ mt: 1, maxHeight: 90, overflowY: 'auto' }}>
+                                <Typography
+                                    variant="body2"
+                                    sx={{
+                                        mt: 1,
+                                        maxHeight: 90,
+                                        overflowY: 'auto',
+                                        fontSize: { xs: 12, sm: 14 },
+                                    }}
+                                >
                                     {card.text}
                                 </Typography>
                             )}
@@ -204,52 +185,54 @@ const SliderMode = () => {
                 ))}
 
                 {/* Navigation Buttons */}
-                <Button
-                    onClick={handlePrev}
-                    sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        left: 70,
-                        transform: 'translateY(-50%)',
-                        zIndex: 30,
-                        width: 48,
-                        height: 48,
-                        minWidth: 0,
-                        borderRadius: '9999px',
-                        border: '1px solid white',
-                        color: 'white',
-                        background: 'transparent',
-                        '&:hover': {
-                            background: 'white',
-                            color: 'black',
-                        },
-                    }}
-                >
-                    <ArrowBack />
-                </Button>
-                <Button
-                    onClick={handleNext}
-                    sx={{
-                        position: 'absolute',
-                        top: '50%',
-                        right: 70,
-                        transform: 'translateY(-50%)',
-                        zIndex: 30,
-                        width: 48,
-                        height: 48,
-                        minWidth: 0,
-                        borderRadius: '9999px',
-                        border: '1px solid white',
-                        color: 'white',
-                        background: 'transparent',
-                        '&:hover': {
-                            background: 'white',
-                            color: 'black',
-                        },
-                    }}
-                >
-                    <ArrowForward />
-                </Button>
+                {!isMobile && (
+                    <>
+                        <Button
+                            onClick={handlePrev}
+                            sx={{
+                                position: 'absolute',
+                                top: '50%',
+                                left: 30,
+                                transform: 'translateY(-50%)',
+                                zIndex: 30,
+                                width: 48,
+                                height: 48,
+                                borderRadius: '9999px',
+                                border: '1px solid white',
+                                color: 'white',
+                                background: 'transparent',
+                                '&:hover': {
+                                    background: 'white',
+                                    color: 'black',
+                                },
+                            }}
+                        >
+                            <ArrowBack />
+                        </Button>
+                        <Button
+                            onClick={handleNext}
+                            sx={{
+                                position: 'absolute',
+                                top: '50%',
+                                right: 30,
+                                transform: 'translateY(-50%)',
+                                zIndex: 30,
+                                width: 48,
+                                height: 48,
+                                borderRadius: '9999px',
+                                border: '1px solid white',
+                                color: 'white',
+                                background: 'transparent',
+                                '&:hover': {
+                                    background: 'white',
+                                    color: 'black',
+                                },
+                            }}
+                        >
+                            <ArrowForward />
+                        </Button>
+                    </>
+                )}
             </Box>
         </Box>
     );
